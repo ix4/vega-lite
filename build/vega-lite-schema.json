@@ -5,7 +5,29 @@
     "Aggregate": {
       "anyOf": [
         {
-          "$ref": "#/definitions/AggregateOp"
+          "enum": [
+            "average",
+            "count",
+            "distinct",
+            "max",
+            "mean",
+            "median",
+            "min",
+            "missing",
+            "q1",
+            "q3",
+            "ci0",
+            "ci1",
+            "stderr",
+            "stdev",
+            "stdevp",
+            "sum",
+            "valid",
+            "values",
+            "variance",
+            "variancep"
+          ],
+          "type": "string"
         },
         {
           "$ref": "#/definitions/ArgmaxDef"

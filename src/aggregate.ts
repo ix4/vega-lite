@@ -35,7 +35,7 @@ export interface ArgmaxDef {
   argmax: string;
 }
 
-export type Aggregate = AggregateOp | ArgmaxDef | ArgminDef;
+export type Aggregate = Exclude<AggregateOp, 'argmin' | 'argmax'> | ArgmaxDef | ArgminDef;
 
 export function isArgminDef(a: Aggregate | string): a is ArgminDef {
   return !!a && !!a['argmin'];
