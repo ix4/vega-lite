@@ -9,7 +9,12 @@ import {
   isValueDef,
   SecondaryFieldDef,
   TypedFieldDef,
-  ValueDef
+  ValueDef,
+  Value,
+  ValueOrGradient,
+  FieldDef,
+  ConditionalPredicate,
+  ConditionalSelection
 } from '../../channeldef';
 import * as log from '../../log';
 import {isPathMark, Mark, MarkConfig, MarkDef} from '../../mark';
@@ -157,7 +162,7 @@ function markDefProperties(mark: MarkDef, ignore: Ignore) {
   }, {});
 }
 
-export function valueIfDefined(prop: string, value: string | number | boolean): VgEncodeEntry {
+export function valueIfDefined(prop: string, value: Value): VgEncodeEntry {
   if (value !== undefined) {
     return {[prop]: {value: value}};
   }
@@ -246,11 +251,11 @@ export function nonPosition(
  * Return a mixin that include a Vega production rule for a Vega-Lite conditional channel definition.
  * or a simple mixin if channel def has no condition.
  */
-export function wrapCondition(
+export function wrapCondition<FD extends FieldDef<any> = FieldDef<string>, V extends ValueOrGradient = ValueOrGradient>(
   model: UnitModel,
-  channelDef: ChannelDef,
+  channelDef: ChannelDef<FD, V>,
   vgChannel: string,
-  refFn: (cDef: ChannelDef) => VgValueRef
+  refFn: (cDef: ChannelDef<FD, V>) => VgValueRef
 ): VgEncodeEntry {
   const condition = channelDef && channelDef.condition;
   const valueRef = refFn(channelDef);

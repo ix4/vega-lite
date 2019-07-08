@@ -1,5 +1,5 @@
 import {AggregateOp} from 'vega';
-import {isArray} from 'vega-util';
+import {isArray, array} from 'vega-util';
 import {isArgmaxDef, isArgminDef} from './aggregate';
 import {isBinned, isBinning} from './bin';
 import {Channel, CHANNELS, isChannel, isNonPositionScaleChannel, isSecondaryRangeChannel, supportMark} from './channel';
@@ -35,7 +35,9 @@ import {
   title,
   TypedFieldDef,
   ValueDef,
-  vgField
+  vgField,
+  ColorGradientFieldDefWithCondition,
+  ColorGradientValueDefWithCondition
 } from './channeldef';
 import {Config} from './config';
 import * as log from './log';
@@ -120,7 +122,7 @@ export interface Encoding<F extends Field> {
    *
    * _Note:_ When using `fill` channel, `color ` channel will be ignored. To customize both fill and stroke, please use `fill` and `stroke` channels (not `fill` and `color`).
    */
-  fill?: StringFieldDefWithCondition<F> | StringValueDefWithCondition<F>;
+  fill?: ColorGradientFieldDefWithCondition<F> | ColorGradientValueDefWithCondition<F>;
 
   /**
    * Stroke color of the marks.
@@ -446,13 +448,14 @@ export function fieldDefs<F extends Field>(encoding: EncodingWithFacet<F>): Fiel
   for (const channel of keys(encoding)) {
     if (channelHasField(encoding, channel)) {
       const channelDef = encoding[channel];
-      (isArray(channelDef) ? channelDef : [channelDef]).forEach(def => {
+      const channelDefArray = isArray(channelDef) ? channelDef : [channelDef];
+      for (const def of channelDefArray) {
         if (isFieldDef(def)) {
           arr.push(def);
         } else if (hasConditionalFieldDef(def)) {
           arr.push(def.condition);
         }
-      });
+      }
     }
   }
   return arr;

@@ -11,7 +11,8 @@ import {
   TypedFieldDef,
   Value,
   ValueDef,
-  ValueDefWithCondition
+  ValueDefWithCondition,
+  Gradient
 } from '../../channeldef';
 import {AREA, BAR, CIRCLE, FILL_STROKE_CONFIG, GEOSHAPE, LINE, POINT, SQUARE, TEXT, TICK} from '../../mark';
 import {ScaleType} from '../../scale';
@@ -195,16 +196,14 @@ function getMaxValue(
 }
 
 function getFirstConditionValue(
-  channelDef:
-    | FieldDefWithCondition<MarkPropFieldDef<string>, Value>
-    | ValueDefWithCondition<MarkPropFieldDef<string>, Value>
+  channelDef: FieldDefWithCondition<MarkPropFieldDef<string>> | ValueDefWithCondition<MarkPropFieldDef<string>>
 ) {
   return getConditionValue(channelDef, (v: number, conditionalDef) => {
     return getFirstDefined(v, conditionalDef.value);
   });
 }
 
-function getConditionValue<V extends Value>(
+function getConditionValue<V extends Value | Gradient>(
   channelDef: FieldDefWithCondition<MarkPropFieldDef<string>, V> | ValueDefWithCondition<MarkPropFieldDef<string>, V>,
   reducer: (val: V, conditionalDef: Conditional<ValueDef>) => V
 ): V {
