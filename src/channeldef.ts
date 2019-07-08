@@ -435,7 +435,7 @@ export function hasConditionalValueDef<F extends Field, V extends ValueOrGradien
 }
 
 export function isFieldDef<F extends Field>(
-  channelDef: ChannelDef<FieldDef<F>, ValueOrGradient>
+  channelDef: ChannelDef<FieldDef<F>>
 ): channelDef is
   | TypedFieldDef<F>
   | SecondaryFieldDef<F>
