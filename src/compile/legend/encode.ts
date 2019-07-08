@@ -205,7 +205,7 @@ function getFirstConditionValue(
 
 function getConditionValue<V extends Value | Gradient>(
   channelDef: FieldDefWithCondition<MarkPropFieldDef<string>, V> | ValueDefWithCondition<MarkPropFieldDef<string>, V>,
-  reducer: (val: V, conditionalDef: Conditional<ValueDef>) => V
+  reducer: (val: V, conditionalDef: Conditional<ValueDef<V>>) => V
 ): V {
   if (hasConditionalValueDef(channelDef)) {
     return (isArray(channelDef.condition) ? channelDef.condition : [channelDef.condition]).reduce(

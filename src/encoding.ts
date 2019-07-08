@@ -1,11 +1,13 @@
 import {AggregateOp} from 'vega';
-import {isArray, array} from 'vega-util';
+import {isArray} from 'vega-util';
 import {isArgmaxDef, isArgminDef} from './aggregate';
 import {isBinned, isBinning} from './bin';
 import {Channel, CHANNELS, isChannel, isNonPositionScaleChannel, isSecondaryRangeChannel, supportMark} from './channel';
 import {
   binRequiresRange,
   ChannelDef,
+  ColorGradientFieldDefWithCondition,
+  ColorGradientValueDefWithCondition,
   Field,
   FieldDef,
   FieldDefWithoutScale,
@@ -35,9 +37,7 @@ import {
   title,
   TypedFieldDef,
   ValueDef,
-  vgField,
-  ColorGradientFieldDefWithCondition,
-  ColorGradientValueDefWithCondition
+  vgField
 } from './channeldef';
 import {Config} from './config';
 import * as log from './log';
@@ -131,7 +131,7 @@ export interface Encoding<F extends Field> {
    * _Note:_ When using `stroke` channel, `color ` channel will be ignored. To customize both stroke and fill, please use `stroke` and `fill` channels (not `stroke` and `color`).
    */
 
-  stroke?: StringFieldDefWithCondition<F> | StringValueDefWithCondition<F>;
+  stroke?: ColorGradientFieldDefWithCondition<F> | ColorGradientValueDefWithCondition<F>;
 
   /**
    * Opacity of the marks.

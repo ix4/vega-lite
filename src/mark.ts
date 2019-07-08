@@ -2,6 +2,7 @@ import {toSet} from 'vega-util';
 import {CompositeMark, CompositeMarkDef} from './compositemark/index';
 import {contains, flagKeys} from './util';
 import {BaseMarkConfig, Color} from './vega.schema';
+import {Gradient} from './channeldef';
 
 export const AREA: 'area' = 'area';
 export const BAR: 'bar' = 'bar';
@@ -67,7 +68,7 @@ export interface ColorMixins {
    *
    * __Note:__ This property cannot be used in a [style config](https://vega.github.io/vega-lite/docs/mark.html#style-config).
    */
-  color?: Color;
+  color?: Color | Gradient;
 }
 
 export interface TooltipContent {

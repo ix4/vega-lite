@@ -39,7 +39,7 @@ export type ValueOrGradient = Value | Gradient;
  */
 export interface ValueDef<V extends ValueOrGradient = ValueOrGradient> {
   /**
-   * A constant value in visual domain (e.g., `"red"` / `"#0099ff"` for color, values between `0` to `1` for opacity).
+   * A constant value in visual domain (e.g., `"red"` / `"#0099ff"` / gradient definition for color, values between `0` to `1` for opacity).
    */
   value: V;
 }

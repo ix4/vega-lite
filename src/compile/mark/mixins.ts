@@ -3,18 +3,17 @@ import {isBinned, isBinning} from '../../bin';
 import {Channel, NonPositionScaleChannel, ScaleChannel, SCALE_CHANNELS, X, X2, Y2} from '../../channel';
 import {
   ChannelDef,
+  FieldDef,
   getTypedFieldDef,
+  Gradient,
   isConditionalSelection,
   isFieldDef,
   isValueDef,
   SecondaryFieldDef,
   TypedFieldDef,
-  ValueDef,
   Value,
-  ValueOrGradient,
-  FieldDef,
-  ConditionalPredicate,
-  ConditionalSelection
+  ValueDef,
+  ValueOrGradient
 } from '../../channeldef';
 import * as log from '../../log';
 import {isPathMark, Mark, MarkConfig, MarkDef} from '../../mark';
@@ -28,7 +27,7 @@ import {UnitModel} from '../unit';
 import * as ref from './valueref';
 import {fieldInvalidPredicate} from './valueref';
 
-function isVisible(c: string) {
+function isVisible(c: string | Gradient) {
   return c !== 'transparent' && c !== null && c !== undefined;
 }
 
@@ -212,7 +211,7 @@ export function nonPosition(
   channel: NonPositionScaleChannel,
   model: UnitModel,
   opt: {
-    defaultValue?: number | string | boolean;
+    defaultValue?: ValueOrGradient;
     vgChannel?: VgEncodeChannel;
     defaultRef?: VgValueRef;
   } = {}
@@ -235,7 +234,7 @@ export function nonPosition(
 
   const channelDef = encoding[channel];
 
-  return wrapCondition(model, channelDef, vgChannel, cDef => {
+  return wrapCondition<FieldDef<string>>(model, channelDef, vgChannel, cDef => {
     return ref.midPoint({
       channel,
       channelDef: cDef,

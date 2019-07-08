@@ -578,7 +578,7 @@ export interface BaseMarkConfig {
    * __Default value:__ (None)
    *
    */
-  stroke?: Color;
+  stroke?: Color | Gradient;
 
   // ---------- Opacity ----------
   /**
