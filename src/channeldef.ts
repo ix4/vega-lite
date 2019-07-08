@@ -136,11 +136,6 @@ export interface ConditionValueDefMixins<V extends ValueOrGradient = ValueOrGrad
 export type FieldDefWithCondition<F extends FieldDef<any>, V extends ValueOrGradient = ValueOrGradient> = F &
   ConditionValueDefMixins<V>;
 
-export type StringFieldDefWithCondition<F extends Field, T extends Type = StandardType> = FieldDefWithCondition<
-  MarkPropFieldDef<F, T>,
-  string | null
->;
-
 export type ColorGradientFieldDefWithCondition<F extends Field, T extends Type = StandardType> = FieldDefWithCondition<
   MarkPropFieldDef<F, T>,
   Gradient | string | null
@@ -151,7 +146,10 @@ export type NumericFieldDefWithCondition<F extends Field> = FieldDefWithConditio
   number
 >;
 
-export type ShapeFieldDefWithCondition<F extends Field> = StringFieldDefWithCondition<F, TypeForShape>;
+export type ShapeFieldDefWithCondition<F extends Field> = FieldDefWithCondition<
+  MarkPropFieldDef<F, TypeForShape>,
+  string | null
+>;
 
 export type TextFieldDefWithCondition<F extends Field> = FieldDefWithCondition<TextFieldDef<F>, Value>;
 

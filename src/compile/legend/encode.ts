@@ -1,9 +1,10 @@
-import {SymbolEncodeEntry} from 'vega';
+import {ColorValueRef, SymbolEncodeEntry} from 'vega';
 import {isArray} from 'vega-util';
 import {COLOR, NonPositionScaleChannel, OPACITY, SHAPE} from '../../channel';
 import {
   Conditional,
   FieldDefWithCondition,
+  Gradient,
   hasConditionalValueDef,
   isTimeFormatFieldDef,
   isValueDef,
@@ -11,8 +12,7 @@ import {
   TypedFieldDef,
   Value,
   ValueDef,
-  ValueDefWithCondition,
-  Gradient
+  ValueDefWithCondition
 } from '../../channeldef';
 import {AREA, BAR, CIRCLE, FILL_STROKE_CONFIG, GEOSHAPE, LINE, POINT, SQUARE, TEXT, TICK} from '../../mark';
 import {ScaleType} from '../../scale';
@@ -87,7 +87,7 @@ export function symbols(
           markDef.fill ||
           (filled && markDef.color);
         if (fill) {
-          out.fill = {value: fill};
+          out.fill = {value: fill} as ColorValueRef;
         }
       }
     }
@@ -107,7 +107,7 @@ export function symbols(
           filled ? markDef.color : undefined
         );
         if (stroke) {
-          out.stroke = {value: stroke};
+          out.stroke = {value: stroke} as ColorValueRef;
         }
       }
     }

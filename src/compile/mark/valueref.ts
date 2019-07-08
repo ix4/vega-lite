@@ -411,7 +411,7 @@ export function tooltipForEncoding(
 }
 
 export function text(
-  channelDef: ChannelDefWithCondition<FieldDef<string>, Exclude<Value, null>>,
+  channelDef: ChannelDefWithCondition<FieldDef<string>, Value>,
   config: Config,
   expr: 'datum' | 'datum.datum' = 'datum'
 ): VgValueRef {

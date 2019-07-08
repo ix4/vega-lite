@@ -29,14 +29,13 @@ import {
   SecondaryFieldDef,
   ShapeFieldDefWithCondition,
   ShapeValueDefWithCondition,
-  StringFieldDefWithCondition,
-  StringValueDefWithCondition,
   TextFieldDef,
   TextFieldDefWithCondition,
   TextValueDefWithCondition,
   title,
   TypedFieldDef,
   ValueDef,
+  ValueOrGradient,
   vgField
 } from './channeldef';
 import {Config} from './config';
@@ -114,7 +113,7 @@ export interface Encoding<F extends Field> {
    * 1) For fine-grained control over both fill and stroke colors of the marks, please use the `fill` and `stroke` channels.  If either `fill` or `stroke` channel is specified, `color` channel will be ignored.
    * 2) See the scale documentation for more information about customizing [color scheme](https://vega.github.io/vega-lite/docs/scale.html#scheme).
    */
-  color?: StringFieldDefWithCondition<F> | StringValueDefWithCondition<F>;
+  color?: ColorGradientFieldDefWithCondition<F> | ColorGradientValueDefWithCondition<F>;
 
   /**
    * Fill color of the marks.
@@ -229,7 +228,7 @@ export function channelHasField<F extends Field>(encoding: EncodingWithFacet<F>,
     if (isArray(channelDef)) {
       return some(channelDef, fieldDef => !!fieldDef.field);
     } else {
-      return isFieldDef(channelDef) || hasConditionalFieldDef(channelDef);
+      return isFieldDef(channelDef) || hasConditionalFieldDef<Field, ValueOrGradient>(channelDef);
     }
   }
   return false;
@@ -452,7 +451,7 @@ export function fieldDefs<F extends Field>(encoding: EncodingWithFacet<F>): Fiel
       for (const def of channelDefArray) {
         if (isFieldDef(def)) {
           arr.push(def);
-        } else if (hasConditionalFieldDef(def)) {
+        } else if (hasConditionalFieldDef<F, ValueOrGradient>(def)) {
           arr.push(def.condition);
         }
       }

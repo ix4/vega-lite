@@ -3,6 +3,7 @@ import {isBinned, isBinning} from '../../bin';
 import {Channel, NonPositionScaleChannel, ScaleChannel, SCALE_CHANNELS, X, X2, Y2} from '../../channel';
 import {
   ChannelDef,
+  Conditional,
   FieldDef,
   getTypedFieldDef,
   Gradient,
@@ -234,7 +235,7 @@ export function nonPosition(
 
   const channelDef = encoding[channel];
 
-  return wrapCondition<FieldDef<string>>(model, channelDef, vgChannel, cDef => {
+  return wrapCondition<FieldDef<string>, ValueOrGradient>(model, channelDef, vgChannel, cDef => {
     return ref.midPoint({
       channel,
       channelDef: cDef,
@@ -250,11 +251,11 @@ export function nonPosition(
  * Return a mixin that include a Vega production rule for a Vega-Lite conditional channel definition.
  * or a simple mixin if channel def has no condition.
  */
-export function wrapCondition<FD extends FieldDef<any> = FieldDef<string>, V extends ValueOrGradient = ValueOrGradient>(
+export function wrapCondition<FD extends FieldDef<any>, V extends ValueOrGradient>(
   model: UnitModel,
   channelDef: ChannelDef<FD, V>,
   vgChannel: string,
-  refFn: (cDef: ChannelDef<FD, V>) => VgValueRef
+  refFn: (cDef: ChannelDef<FD, V> | Conditional<ValueDef<V> | FD>) => VgValueRef
 ): VgEncodeEntry {
   const condition = channelDef && channelDef.condition;
   const valueRef = refFn(channelDef);
